@@ -19,7 +19,7 @@ module stream_upsize#(
     );
     
     reg [T_DATA_WIDTH-1:0] fifo [T_DATA_RATIO*2-1:0];//буфер
-    reg [T_DATA_RATIO*2-1:0] fifo_valid;//массив флагов валидности слов в буфере
+    reg [T_DATA_RATIO*2-1:0] fifo_valid;// флаги валидности слов в буфере
     reg [T_DATA_RATIO-1:0] cnt, pnt;//счётчик текущего ввода в буфер и счётчик текущего вывода из буфера
     reg [T_DATA_WIDTH-1:0] fixed_data [T_DATA_RATIO-1:0];//выходные регистры слов
     reg [T_DATA_RATIO-1:0] fixed_valid;//выходные регистры флагов валидности
@@ -47,7 +47,7 @@ module stream_upsize#(
             if(m_ready_i) begin
                 if((enter || last_enter) && !flush)begin
                     for(int j=0;j<T_DATA_RATIO;j=j+1)begin
-                        fixed_data[j] <= fifo[pnt+j];//слова и флаги валидности фиксируются
+                        fixed_data[j] <= fifo[pnt+j];//cлова и флаги валидности фиксируются
                         fixed_valid[j] <= fifo_valid[pnt+j];
                         fifo_valid[j] <= 0;//валидность выведенных слов будет сброшена
                     end
