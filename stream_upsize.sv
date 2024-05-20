@@ -58,15 +58,20 @@ module stream_upsize#(
                     if(last_enter) begin
                         m_last_o <= 1;
                         last_enter <= 0;
+                        s_ready_o <= 1;
+                        cnt <= 0;
+                        pnt <= 0;
+                        fifo_valid <= 0;
                     end
                 end
                 else if(flush)begin
                     for(int j=0;j<T_DATA_RATIO;j=j+1)begin
                         fixed_data[j] <= 0;
                         fixed_valid[j] <= 0;
-                        m_valid_o <= 0;
                     end
+                    m_valid_o <= 0;
                     flush <= 0;
+                    m_last_o <= 0;
                 end  
             end
             
@@ -89,7 +94,7 @@ module stream_upsize#(
                     last_enter <= 0;
                 end
             end
-            else s_ready_o <= 0;
+            else if(!m_ready_i && !s_valid_i) s_ready_o <= 0;
         end
     end
 endmodule
