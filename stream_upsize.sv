@@ -95,7 +95,7 @@ module stream_upsize#(
                     last_enter <= 0;
                 end
             end
-            else if(!m_ready_i && !s_valid_i) s_ready_o <= 0;
+            else if(!m_ready_i || !s_valid_i) s_ready_o <= 0;
         end
     end
 endmodule
